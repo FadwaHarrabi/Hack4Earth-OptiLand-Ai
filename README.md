@@ -1,4 +1,4 @@
-# AI-Based Platform for Land Use and Land Cover (LULC) Classification 🌍
+# Satellite-Based Monitoring System for Land Use and Land Cover Changes for Sustainable Development 🌍
 ![image](https://github.com/user-attachments/assets/e5472acb-2c8c-4dfa-a4dd-71555b2c6a63)
 
 ## Table of Contents
