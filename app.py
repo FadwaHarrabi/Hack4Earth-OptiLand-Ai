@@ -5,10 +5,10 @@ from datetime import datetime
 
 # Initialize the Earth Engine API (Make sure you're authenticated)
 try:
-    ee.Initialize()
+    ee.Initialize(project="optiland-ai")
 except Exception as e:
     ee.Authenticate()
-    ee.Initialize()
+    ee.Initialize(project="optiland-ai")
 
 # Sidebar input options
 st.sidebar.title("LULC Classification for Kairouan, Tunisia")
