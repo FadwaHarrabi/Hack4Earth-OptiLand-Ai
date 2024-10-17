@@ -56,9 +56,9 @@ This repository contains an AI-based platform designed to classify **Land Use an
 
 ## Demo
 [Download the Demo Video](assets/LUCD.mp4)
-![image](assets/Screenshot 2024-10-17 123955.png)
-![image](assets/Screenshot 2024-10-17 123859.png)
-![image](assets\Screenshot 2024-10-17 123836.png)
+- ![image](assets/Screenshot 2024-10-17 123955.png)
+- ![image](assets/Screenshot 2024-10-17 123859.png)
+- ![image](assets/Screenshot 2024-10-17 123836.png)
 
 ## Dataset
 
