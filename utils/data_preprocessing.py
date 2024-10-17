@@ -7,6 +7,17 @@ from torchvision import datasets, transforms
 
 # Custom Dataset class for EuroSAT
 class EuroSAT(torch.utils.data.Dataset):
+    """
+    Custom Dataset class for loading the EuroSAT dataset.
+
+    Args:
+        dataset (torch.utils.data.Dataset): The dataset to wrap.
+        transform (callable, optional): A function/transform to apply to the data.
+
+    Methods:
+        __getitem__(index): Returns a single sample from the dataset.
+        __len__(): Returns the total number of samples in the dataset.
+    """
     def __init__(self, dataset, transform=None):
         self.dataset = dataset
         self.transform = transform
@@ -24,6 +35,19 @@ class EuroSAT(torch.utils.data.Dataset):
 
 # Function to create transformations
 def create_transforms(input_size=224, mean=None, std=None):
+    """
+    Create data transformations for training, validation, and testing.
+
+    Args:
+        input_size (int): The target size for resizing the images.
+        mean (list, optional): The mean values for normalization. 
+                               Defaults to ImageNet statistics if not provided.
+        std (list, optional): The standard deviation values for normalization.
+                              Defaults to ImageNet statistics if not provided.
+
+    Returns:
+        tuple: A tuple containing the training, validation, and testing transformations.
+    """
     if mean is None:
         mean = [0.485, 0.456, 0.406]
     if std is None:
@@ -56,7 +80,27 @@ def create_transforms(input_size=224, mean=None, std=None):
 # Function to load and split the dataset
 def split_dataset(data_dir, train_transform, val_transform, test_transform, 
                   train_size=0.70, val_size=0.15, batch_size=16, num_workers=2, processed_dir='data/processed'):
-    
+    """
+    Load and split the dataset into training, validation, and testing sets.
+
+    Args:
+        data_dir (str): The directory containing the dataset.
+        train_transform (callable): Transformations to apply to the training set.
+        val_transform (callable): Transformations to apply to the validation set.
+        test_transform (callable): Transformations to apply to the test set.
+        train_size (float): Proportion of the dataset to use for training. 
+                            Defaults to 0.70.
+        val_size (float): Proportion of the dataset to use for validation. 
+                          Defaults to 0.15.
+        batch_size (int): Number of samples per batch. Defaults to 16.
+        num_workers (int): Number of subprocesses to use for data loading. 
+                           Defaults to 2.
+        processed_dir (str): Directory to save processed data. Defaults to 'data/processed'.
+
+    Returns:
+        tuple: A tuple containing DataLoaders for the training, validation, 
+               and testing sets, along with the class labels.
+    """
     # Load the dataset without transforms (transform will be applied to the subsets)
     dataset = datasets.ImageFolder(data_dir)
     
@@ -96,6 +140,16 @@ def split_dataset(data_dir, train_transform, val_transform, test_transform,
 
 # Function to save the split data into train/val/test folders
 def save_split_data(dataset, train_indices, val_indices, test_indices, processed_dir):
+    """
+    Save the split dataset into separate train, validation, and test folders.
+
+    Args:
+        dataset (torch.utils.data.Dataset): The dataset containing the samples.
+        train_indices (list): Indices of training samples.
+        val_indices (list): Indices of validation samples.
+        test_indices (list): Indices of test samples.
+        processed_dir (str): Directory to save the processed data.
+    """
     # Create directories
     train_dir = os.path.join(processed_dir, 'train')
     val_dir = os.path.join(processed_dir, 'val')

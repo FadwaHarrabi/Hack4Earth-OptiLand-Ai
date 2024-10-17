@@ -6,6 +6,23 @@ from tqdm import tqdm
 import os
 
 def evaluate(model, dataloader, criterion, device, phase="val"):
+    """
+    Evaluate the model on the given dataloader and compute loss and accuracy.
+
+    This function sets the model to evaluation mode, processes the inputs 
+    through the model, computes the loss and accuracy, and prints the 
+    results.
+
+    Args:
+        model (torch.nn.Module): The model to evaluate.
+        dataloader (torch.utils.data.DataLoader): DataLoader for the validation or test dataset.
+        criterion (torch.nn.Module): Loss function to compute the loss.
+        device (str): The device to which the model and data will be moved ('cpu' or 'cuda').
+        phase (str): The phase of evaluation ('val' for validation or 'test' for testing).
+
+    Returns:
+        tuple: A tuple containing the average loss and accuracy for the evaluation phase.
+    """
     model.eval()
 
     running_loss = 0.0
@@ -32,6 +49,22 @@ def evaluate(model, dataloader, criterion, device, phase="val"):
 
 
 def train(model, dataloader, criterion, optimizer, device):
+    """
+    Train the model on the given dataloader for one epoch.
+
+    This function sets the model to training mode, processes the inputs, 
+    computes the loss, performs backpropagation, and updates the model weights.
+
+    Args:
+        model (torch.nn.Module): The model to train.
+        dataloader (torch.utils.data.DataLoader): DataLoader for the training dataset.
+        criterion (torch.nn.Module): Loss function to compute the loss.
+        optimizer (torch.optim.Optimizer): Optimizer for updating the model weights.
+        device (str): The device to which the model and data will be moved ('cpu' or 'cuda').
+
+    Returns:
+        tuple: A tuple containing the average loss and accuracy for the training epoch.
+    """
     model.train()
 
     running_loss = 0.0
@@ -72,6 +105,26 @@ def train(model, dataloader, criterion, optimizer, device):
 
 
 def fit(model, train_loader, val_loader, n_epochs, lr, criterion, optimizer, device):
+    """
+    Train and validate the model over a specified number of epochs.
+
+    This function iterates over the training and validation sets for the 
+    given number of epochs, keeping track of the best model based on 
+    validation loss.
+
+    Args:
+        model (torch.nn.Module): The model to train and validate.
+        train_loader (torch.utils.data.DataLoader): DataLoader for the training dataset.
+        val_loader (torch.utils.data.DataLoader): DataLoader for the validation dataset.
+        n_epochs (int): The number of epochs to train the model.
+        lr (float): Learning rate for the optimizer.
+        criterion (torch.nn.Module): Loss function to compute the loss.
+        optimizer (torch.optim.Optimizer): Optimizer for updating the model weights.
+        device (str): The device to which the model and data will be moved ('cpu' or 'cuda').
+
+    Returns:
+        torch.nn.Module: The best model after training and validation.
+    """
     best_loss = np.inf
     best_model = None
 
@@ -89,7 +142,17 @@ def fit(model, train_loader, val_loader, n_epochs, lr, criterion, optimizer, dev
 
 
 def save_model(best_model, model_file):
+    """
+    Save the trained model to a specified file.
+
+    This function saves the model's state dictionary to the given file path.
+
+    Args:
+        best_model (torch.nn.Module): The trained model to save.
+        model_file (str): The file path where the model will be saved.
+
+    Returns:
+        None
+    """
     torch.save(best_model.state_dict(), model_file)
     print(f'Model successfully saved to {model_file}.')
-
-
