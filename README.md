@@ -56,7 +56,7 @@ This repository contains an AI-based platform designed to classify **Land Use an
 - **Plotly**: For generating interactive plots and charts.
 
 ### Clone the Repository
-- **git clone**:https://github.com/yourusername/your-repo-name.git
+- **git clone**:https://github.com/FadwaHarrabi/Hack4Earth-OptiLand-Ai.git
 
 ### Install Requirements
 Install all the dependencies required to run the app:
