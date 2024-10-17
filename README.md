@@ -55,10 +55,7 @@ This repository contains an AI-based platform designed to classify **Land Use an
 - **Plotly**: For generating interactive plots and charts.
 
 ## Demo
-<video width="600" controls>
-  <source src="assets/LUCD.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[Download the Demo Video](assets/LUCD.mp4)
 
 ## Dataset
 
