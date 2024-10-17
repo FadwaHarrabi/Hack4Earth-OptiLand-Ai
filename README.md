@@ -55,7 +55,8 @@ This repository contains an AI-based platform designed to classify **Land Use an
 
 
 ### Demo
-[Watch video](assets\LUCD.mp4)
+[Watch video](assets/LUCD.mp4)
+
 
 
 ### Clone the Repository
@@ -78,3 +79,7 @@ This project is licensed under the MIT License.
 - Google Earth Engine for providing satellite data.
 - PyTorch for the deep learning framework.
 - Streamlit for simplifying web app development.
+
+For more details check the authors profile
+- Kadri WADIE[](https://www.linkedin.com/in/kadri-wadie?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BfMVI6fNCQxmvDpQs993TCg%3D%3D)
+- Fadwa Harrabi (https://www.linkedin.com/in/fadwa-harrabi-546746259?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BjyZm9EJlTUyR6%2FB2xhEzBg%3D%3D)
