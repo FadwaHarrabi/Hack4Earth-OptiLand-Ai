@@ -56,6 +56,8 @@ This repository contains an AI-based platform designed to classify **Land Use an
 - **Folium**: For map visualization.
 - **Plotly**: For generating interactive plots and charts.
 
+
+
 ## License
 This project is licensed under the MIT License.
 
