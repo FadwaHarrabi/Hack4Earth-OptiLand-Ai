@@ -5,13 +5,13 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
-- [How It Works](#application-workflow)
-- [Usage](#usage)
-- [Folder Structure](#folder-structure)
+- [Application Workflow](#application-workflow)
+- [LULC Classes and CO₂ Impact Rates](#lulc-classes-and-co-impact-rates)
+- [Technologies Used](#technologies-used)
+- [Demo](#demo)
 - [Dataset](#dataset)
 - [Installation](#installation)
 - [How to Run](#how-to-run)
-- [Demo](#demo)
 - [Team](#team)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
@@ -54,12 +54,19 @@ This repository contains an AI-based platform designed to classify **Land Use an
 - **Folium**: For map visualization.
 - **Plotly**: For generating interactive plots and charts.
 
-### Demo
+## Demo
 <video width="600" controls>
   <source src="assets/LUCD.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
+## Dataset
+
+The dataset used in this study is the EuroSAT dataset, which contains 27,000 labeled 64x64 pixel Sentinel-2 satellite image patches across 10 different Land Use Land Cover (LULC) categories: 'AnnualCrop', 'Forest', 'HerbaceousVegetation', 'Highway', 'Industrial', 'Pasture', 'PermanentCrop', 'Residential', 'River', and 'SeaLake'. Both RGB and multi-spectral (MS) images are available for download. For our project, we will focus on RGB image classification.
+
+**Dataset available:** [EuroSAT Dataset](https://zenodo.org/records/7711810#.ZAm3k-zMKEA)
+
+## Installation
 ### Clone the Repository
 To clone the repository, use the following command:
 ```bash
@@ -72,7 +79,7 @@ Install all the dependencies required to run the app:
 pip install -r requirements.txt
 ```
 
-### Usage
+## How to Run
 To run the Streamlit app, execute the following command:
 ```bash
 streamlit run app.py
