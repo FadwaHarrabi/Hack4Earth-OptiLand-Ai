@@ -56,12 +56,19 @@ This repository contains an AI-based platform designed to classify **Land Use an
 
 ## Demo
 [Download the Demo Video](assets/LUCD.mp4)
+<<<<<<< HEAD
 ![
 ](<assets/Screenshot 2024-10-17 123955.png>)
 ![
 ](<assets/Screenshot 2024-10-17 123859.png>)
 ![
 ](<assets/Screenshot 2024-10-17 123836.png>)
+=======
+- ![image](assets/Screenshot 2024-10-17 123955.png)
+- ![image](assets/Screenshot 2024-10-17 123859.png)
+- ![image](assets/Screenshot 2024-10-17 123836.png)
+
+>>>>>>> 606e9cd8b74fd46d2a67a4023dab301be4edd193
 ## Dataset
 
 The dataset used in this study is the EuroSAT dataset, which contains 27,000 labeled 64x64 pixel Sentinel-2 satellite image patches across 10 different Land Use Land Cover (LULC) categories: 'AnnualCrop', 'Forest', 'HerbaceousVegetation', 'Highway', 'Industrial', 'Pasture', 'PermanentCrop', 'Residential', 'River', and 'SeaLake'. Both RGB and multi-spectral (MS) images are available for download. For our project, we will focus on RGB image classification.
