@@ -1,7 +1,6 @@
 # Satellite-Based Monitoring System for Land Use and Land Cover Changes for Sustainable Development 🌍
 
 ![image](https://github.com/user-attachments/assets/e5472acb-2c8c-4dfa-a4dd-71555b2c6a63)
-![Demo Video](assets/LUCD.mp4)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -56,6 +55,16 @@ This repository contains an AI-based platform designed to classify **Land Use an
 - **Folium**: For map visualization.
 - **Plotly**: For generating interactive plots and charts.
 
+### Clone the Repository
+- **git clone**:https://github.com/yourusername/your-repo-name.git
+
+### Install Requirements
+Install all the dependencies required to run the app:
+- pip install -r requirements.txt
+
+### Usage
+To run the Streamlit app, execute the following command:
+- streamlit run app.py
 
 
 ## License
