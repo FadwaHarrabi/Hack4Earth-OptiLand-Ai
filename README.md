@@ -1,5 +1,7 @@
 # Satellite-Based Monitoring System for Land Use and Land Cover Changes for Sustainable Development 🌍
+
 ![image](https://github.com/user-attachments/assets/e5472acb-2c8c-4dfa-a4dd-71555b2c6a63)
+![Demo Video](assets/LUCD.mp4)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -17,26 +19,47 @@
 - [License](#license)
 
 ## Introduction
-This repository contains an AI-based platform designed to classify **Land Use and Land Cover (LULC)** from **Sentinel-2 satellite imagery**. The platform is developed as part of the [Hack4Earth Hackathon](https://hack4earth.org), focusing on sustainable environmental solutions through AI. It allows users to analyze geospatial data and predict LULC categories such as forests, urban areas, water bodies, and agricultural land, as well as calculate **carbon storage** based on vegetation indices.
+This repository contains an AI-based platform designed to classify **Land Use and Land Cover (LULC)** from **Sentinel-2 satellite imagery**. The platform is developed as part of the [Hack4Earth Hackathon](https://hack4earth.org), focusing on sustainable environmental solutions through AI. OptiLand-Ai is an AI-powered web application for LULC prediction using satellite imagery. The app allows users to select a province, view satellite imagery, and predict LULC classes, while also calculating the CO₂ impact based on different land covers. This tool is particularly useful for environmental monitoring and sustainability analysis.
 
 ## Features
-- **Sentinel-2 Image Processing**: Extract multi-band imagery using Google Earth Engine (GEE) for a specific region and time.
-- **LULC Classification**: Leverages state-of-the-art deep learning models (e.g., U-Net, ResNet) to classify various land cover types.
-- **Carbon Storage Estimation**: Uses vegetation indices (e.g., NDVI) to approximate carbon storage based on biomass density.
-- **Interactive Visualization**: Integrates with mapping libraries such as **Folium** and **Leaflet** for interactive map rendering.
-- **Sustainable Development Focus**: Aimed at promoting land use practices aligned with environmental sustainability.
+- **LULC Prediction**: Uses a pre-trained ResNet50 model to predict different LULC classes such as forests, residential areas, industrial areas, and more.
+- **Satellite Image Visualization**: Displays the satellite imagery of selected provinces with overlaid predictions using Folium.
+- **CO₂ Impact Calculation**: Estimates the total CO₂ impact based on the predicted land use classes.
+- **Interactive Map**: Integrates Folium and Streamlit for an interactive experience, including map layers and LULC class legends.
+- **Class Distribution**: Displays a bar chart of the distribution of predicted LULC classes with a breakdown of their CO₂ impact.
 
-## How It Works
-The platform operates in three core stages:
-1. **Data Acquisition**: Uses GEE API to fetch Sentinel-2 images filtered by cloud coverage and time.
-2. **Modeling and Classification**: The LULC classification model is trained on labeled satellite imagery using a CNN-based architecture.
-3. **Carbon Storage Calculation**: The NDVI (Normalized Difference Vegetation Index) is calculated from the NIR and Red bands to estimate vegetation biomass and carbon storage.
+### Application Workflow:
+1. **Select a Province**: Use the sidebar to select one of the available provinces (e.g., Tunis, Monastir).
+2. **View Satellite Imagery**: The app will load and display satellite images for the selected province.
+3. **LULC Prediction**: The app will automatically generate grid tiles over the selected region and predict LULC classes for each tile.
+4. **CO₂ Calculation**: Optionally, click the Calculate CO₂ button to estimate the CO₂ impact of the predicted land classes.
 
-## Architecture
-```mermaid
-graph LR
-    A[Sentinel-2 Imagery] --> B[Google Earth Engine API]
-    B --> C[LULC Model Inference]
-    C --> D[NDVI Calculation for Carbon Storage]
-    D --> E[Interactive Map Visualization]
-    E --> F[User Interaction and Analysis]
+### LULC Classes and CO₂ Impact Rates
+| LULC Class              | Color          | CO₂ Impact (tons) |
+|------------------------|----------------|--------------------|
+| AnnualCrop             | Light Green    | 2.5                |
+| Forest                 | Forest Green   | -20                |
+| HerbaceousVegetation    | Yellow Green   | -5                 |
+| Highway                | Gray           | 10                 |
+| Industrial             | Red            | 50                 |
+| Pasture                | Medium Sea Green| 1.5               |
+| PermanentCrop          | Chartreuse     | -3                 |
+| Residential            | Magenta        | 15                 |
+| River                  | Dodger Blue    | 0                  |
+| SeaLake                | Blue           | 0                  |
+
+## Technologies Used
+- **Streamlit**: For creating the web interface.
+- **PyTorch**: For loading and running the pre-trained ResNet50 model.
+- **Earth Engine (EE)**: For initializing and processing satellite imagery.
+- **Geopandas & Rasterio**: For working with geospatial data and raster images.
+- **Folium**: For map visualization.
+- **Plotly**: For generating interactive plots and charts.
+
+## License
+This project is licensed under the MIT License.
+
+## Acknowledgements
+- Google Earth Engine for providing satellite data.
+- PyTorch for the deep learning framework.
+- Streamlit for simplifying web app development.
