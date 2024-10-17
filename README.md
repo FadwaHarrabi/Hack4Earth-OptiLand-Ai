@@ -5,18 +5,16 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
-- [How It Works](#how-it-works)
-- [Architecture](#architecture)
+- [How It Works](#Application Workflow)
 - [Usage](#usage)
 - [Folder Structure](#folder-structure)
 - [Dataset](#dataset)
 - [Installation](#installation)
 - [How to Run](#how-to-run)
 - [Demo](#demo)
-- [Future Enhancements](#future-enhancements)
 - [Team](#team)
 - [License](#license)
-
+- [Acknowledgements](#acknowledgements)
 ## Introduction
 This repository contains an AI-based platform designed to classify **Land Use and Land Cover (LULC)** from **Sentinel-2 satellite imagery**. The platform is developed as part of the [Hack4Earth Hackathon](https://hack4earth.org), focusing on sustainable environmental solutions through AI. OptiLand-Ai is an AI-powered web application for LULC prediction using satellite imagery. The app allows users to select a province, view satellite imagery, and predict LULC classes, while also calculating the CO₂ impact based on different land covers. This tool is particularly useful for environmental monitoring and sustainability analysis.
 
@@ -55,6 +53,11 @@ This repository contains an AI-based platform designed to classify **Land Use an
 - **Folium**: For map visualization.
 - **Plotly**: For generating interactive plots and charts.
 
+
+### Demo
+[Watch video](assets\LUCD.mp4)
+
+
 ### Clone the Repository
 - **git clone**:https://github.com/FadwaHarrabi/Hack4Earth-OptiLand-Ai.git
 
@@ -65,8 +68,9 @@ Install all the dependencies required to run the app:
 ### Usage
 To run the Streamlit app, execute the following command:
 - streamlit run app.py
-
-
+## Team
+the team leader:Wadie Kadri
+Team member :Fadwa Harrabi
 ## License
 This project is licensed under the MIT License.
 
