@@ -1,7 +1,7 @@
 # Satellite-Based Monitoring System for Land Use and Land Cover Changes for Sustainable Development 🌍
 
 ![
-](<assets/assets/LULC.png>)
+](<assets/LULC.png>)
 
 ## Table of Contents
 - [Introduction](#introduction)
