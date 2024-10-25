@@ -1,5 +1,5 @@
 import streamlit as st
-st.set_page_config(page_title="OptiLand-Ai🌏", layout="centered", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="OptiLand-Ai🌏", layout="wide", initial_sidebar_state="collapsed")
 import os
 import ee
 import torch
@@ -17,11 +17,37 @@ import pandas as pd
 from rasterio import mask
 import plotly.express as px
 import matplotlib.colors as cl
+import base64
+st.title("LULC Prediction Application 🛰️🗺")
+
+
+map_tab, co2_tab = st.tabs(["Map View" ,"CO₂ Impact Analysis"])
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # Initialize Earth Engine
 ee.Initialize(project="optiland-ai")
+st.markdown(
+    """
+    <style>
+    /* Sidebar and main page styling */
+    .css-1aumxhk {background-color: #28334A; color: white;}
+    .css-18e3th9 {background-color: #28334A; color: white;}
+    .css-1v3fvcr {color: white;}
+    
+    /* Map and section containers styling */
+    .reportview-container {
+        background-color: #f0f2f5;
+    }
+    .css-1v0mbdj {padding: 20px 5px; margin-bottom: 20px;}
+    
+    /* Title and headers */
+    .css-10trblm {font-size: 28px; font-weight: bold; color: #2C3E50;}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.markdown(
     """
     <style>
@@ -106,7 +132,7 @@ model = load_model()
 
 # Sidebar: Province selection
 st.sidebar.subheader("Select a governorate")
-selected_province = st.sidebar.selectbox("Governorate", ["Tunis", "Monastir", "Mahdia", "Ariana"])
+selected_province = st.sidebar.selectbox("Governorate", ["Tunis", "Monastir", "Mahdia", "Ariana","Zaghouan"])
 province_shape = provinces[selected_province]['geometry']
 province_boundary_gdf = gpd.GeoDataFrame([{'geometry': province_shape}], crs="EPSG:4326")
 
@@ -120,7 +146,7 @@ def load_tif_image(tif_path):
 
 # Define image paths based on selected province
 def get_image_path(province):
-    return f"data/images/{province}.tif" if province in ["Tunis", "Monastir", "Ariana", "Mahdia"] else None
+    return f"data/images/{province}.tif" if province in ["Tunis", "Monastir", "Ariana", "Mahdia","Zaghouan"] else None
 
 # Generate 64x64 polygon tiles over the image
 def generate_tiles(image_file, output_file, area_str, size=64):
@@ -147,6 +173,9 @@ def generate_tiles(image_file, output_file, area_str, size=64):
     results.to_file(output_file, driver="GeoJSON")
     raster.close()
     return results
+
+
+
 
 # Display satellite image with Folium
 def display_satellite_image(image_array, province_shape):
@@ -195,80 +224,86 @@ def predict_crop(image_path, shape, classes, model):
 
     return label
 
-st.title("LULC Prediction Application 🛰️🗺")
 
-# Step 1: Load and display satellite image
-image_path = get_image_path(selected_province)
-if image_path:
-    tif_image = load_tif_image(image_path)
-    map_obj = display_satellite_image(tif_image, province_shape)
-    st_folium(map_obj, width=800, height=500)
+with map_tab:
+    col1,col2=st.columns(2)
+    # Step 1: Load and display satellite image
+    image_path = get_image_path(selected_province)
+    if image_path:
+        tif_image = load_tif_image(image_path)
+        with col1.container():
+            st.subheader("Satellite Image of Selected Province")
+            map_obj = display_satellite_image(tif_image, province_shape)
+            st_folium(map_obj, width=800, height=500)
 
-# Step 2: Generate grid tiles
-output_file = f"geoboundary/{selected_province}_tiles.geojson"
-tiles = generate_tiles(image_path, output_file, selected_province)
-image = rio.open(image_path)
+    # Step 2: Generate grid tiles
+    output_file = f"geoboundary/{selected_province}_tiles.geojson"
+    tiles = generate_tiles(image_path, output_file, selected_province)
+    image = rio.open(image_path)
 
-# Geopandas sjoin function
-tiles = gpd.sjoin(tiles, province_boundary_gdf, predicate='within')
+    # Geopandas sjoin function
+    tiles = gpd.sjoin(tiles, province_boundary_gdf, predicate='within')
 
-# Define transforms
-imagenet_mean, imagenet_std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
-transform = transforms.Compose([
-    transforms.Resize(224),
-    transforms.CenterCrop(224),
-    transforms.ToTensor(),
-    transforms.Normalize(imagenet_mean, imagenet_std)
-])
+    # Define transforms
+    imagenet_mean, imagenet_std = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
+    transform = transforms.Compose([
+        transforms.Resize(224),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize(imagenet_mean, imagenet_std)
+    ])
 
-# Perform predictions
-labels = []
-for index in tqdm(range(len(tiles)), total=len(tiles)):
-    label = predict_crop(image_path, [tiles.iloc[index]['geometry']], classes, model)
-    labels.append(label)
-tiles['pred'] = labels
+    # Perform predictions
+    labels = []
+    for index in tqdm(range(len(tiles)), total=len(tiles)):
+        label = predict_crop(image_path, [tiles.iloc[index]['geometry']], classes, model)
+        labels.append(label)
+    tiles['pred'] = labels
 
-# Assign colors to tiles
-tiles['color'] = tiles['pred'].apply(lambda x: cl.to_hex(colors.get(x)))
+    # Assign colors to tiles
+    tiles['color'] = tiles['pred'].apply(lambda x: cl.to_hex(colors.get(x)))
 
-# Create map and add tiles
-centroid = province_shape.centroid.coords[0]
-map = folium.Map(location=[centroid[1], centroid[0]], zoom_start=10)
+    # Create map and add tiles
+    centroid = province_shape.centroid.coords[0]
+    map = folium.Map(location=[centroid[1], centroid[0]], zoom_start=10)
 
-# Add Google Satellite basemap
-folium.TileLayer(
-    tiles='https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-    attr='Google',
-    name='Google Satellite',
-    overlay=True,
-    control=True
-).add_to(map)
+    # Add Google Satellite basemap
+    folium.TileLayer(
+        tiles='https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+        attr='Google',
+        name='Google Satellite',
+        overlay=True,
+        control=True
+    ).add_to(map)
 
-# Add LULC Map with legend
-legend_txt = '<span style="color: {col};">{txt}</span>'
-for label, color in colors.items():
-    name = legend_txt.format(txt=label, col=color)
-    feat_group = folium.FeatureGroup(name=name)
-    subtiles = tiles[tiles.pred == label]
-    if len(subtiles) > 0:
-        folium.GeoJson(
-            subtiles,
-            style_function=lambda feature: {
-                'fillColor': feature['properties']['color'],
-                'color': feature['properties']['color'],
-                'weight': 1,
-                'opacity': 1
-            },
-            name=label
-        ).add_to(feat_group)
-        feat_group.add_to(map)
+    # Add LULC Map with legend
+    legend_txt = '<span style="color: {col};">{txt}</span>'
+    for label, color in colors.items():
+        name = legend_txt.format(txt=label, col=color)
+        feat_group = folium.FeatureGroup(name=name)
+        subtiles = tiles[tiles.pred == label]
+        if len(subtiles) > 0:
+            folium.GeoJson(
+                subtiles,
+                style_function=lambda feature: {
+                    'fillColor': feature['properties']['color'],
+                    'color': feature['properties']['color'],
+                    'weight': 1,
+                    'opacity': 1
+                },
+                name=label
+            ).add_to(feat_group)
+            feat_group.add_to(map)
 
-# Finalize map
-folium.LayerControl().add_to(map)
-st_folium(map, width=800, height=500)
+    # Finalize map
+    with col2:
+        st.subheader("Class Distribution of LULC Predictions")
 
-# Cleanup
-delete_temp_file(temp_tif)
+        folium.LayerControl().add_to(map)
+        st_folium(map, width=800, height=500)
+
+    # Cleanup
+    delete_temp_file(temp_tif)
 
 # Function to calculate CO2 impact
 def calculate_co2_from_tiles(tiles, co2_rates):
@@ -296,9 +331,54 @@ def display_class_distribution(class_counts, colors):
 
     fig.update_layout(xaxis_title="LULC Class", yaxis_title="Number of Tiles", xaxis_tickangle=-45)
     st.plotly_chart(fig)
+def calculate_co2_impact_by_class(class_counts, co2_rates):
+    co2_impact_by_class = {}
+    for lulc_class, count in class_counts.items():
+        co2_rate = co2_rates.get(lulc_class, 0)
+        co2_impact_by_class[lulc_class] = co2_rate * count
+    return co2_impact_by_class
 
-# Display the bar plot and CO2 calculation
-if st.sidebar.button("Calculate CO₂"):
-    co2_total, class_counts = calculate_co2_from_tiles(tiles, co2_rates)
-    st.write(f"Total CO₂ impact: {co2_total} tons")
-    display_class_distribution(class_counts, colors)
+def display_co2_impact_chart(co2_impact_by_class):
+    classes = list(co2_impact_by_class.keys())
+    impacts = list(co2_impact_by_class.values())
+    
+    fig = px.bar(
+        x=classes,
+        y=impacts,
+        color=classes,
+        color_discrete_sequence=[colors[c] for c in classes],
+        labels={'x': 'LULC Class', 'y': 'Total CO₂ Impact (tons)'},
+        title="CO₂ Impact by Land Use Class"
+    )
+    
+    fig.update_layout(xaxis_title="LULC Class", yaxis_title="Total CO₂ Impact (tons)", xaxis_tickangle=-45)
+    st.plotly_chart(fig)
+
+co2_total, class_counts = calculate_co2_from_tiles(tiles, co2_rates)
+top_lulc_class = max(class_counts, key=class_counts.get)
+co2_impact_by_class = calculate_co2_impact_by_class(class_counts, co2_rates)
+
+with co2_tab:
+    # Display the bar plot and CO2 calculation
+     # CO₂ impact metric
+    col1, col2, col3 = st.columns(3)
+    # col1.metric("Total CO₂ Impact", f"{co2_total} tons")
+    # col2.metric("Top LULC Class", top_lulc_class)
+    # col3.metric("Tiles Analyzed", len(tiles))
+
+
+    with col1.container(border=True):
+        st.metric(label='📌Total CO₂ Impact',value=f"{co2_total} tons")
+
+    with col2.container(border=True):
+        st.metric(label='📌Top LULC Class',value=top_lulc_class)
+
+
+    with col3.container(border=True):
+        st.metric(label='📌Tiles Analyzed',value=len(tiles))
+    col1,col2=st.columns(2)
+    with col1.container(border=True):
+        display_class_distribution(class_counts, colors)
+    with col2.container(border=True):
+        display_co2_impact_chart(co2_impact_by_class)
+
