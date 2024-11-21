@@ -132,7 +132,7 @@ model = load_model()
 
 # Sidebar: Province selection
 st.sidebar.subheader("Select a governorate")
-selected_province = st.sidebar.selectbox("Governorate", ["Tunis", "Monastir", "Mahdia", "Ariana","Zaghouan"])
+selected_province = st.sidebar.selectbox("Governorate", ["Tunis", "Monastir", "Mahdia", "Ariana","Zaghouan","Manouba"])
 province_shape = provinces[selected_province]['geometry']
 province_boundary_gdf = gpd.GeoDataFrame([{'geometry': province_shape}], crs="EPSG:4326")
 
@@ -146,7 +146,7 @@ def load_tif_image(tif_path):
 
 # Define image paths based on selected province
 def get_image_path(province):
-    return f"data/images/{province}.tif" if province in ["Tunis", "Monastir", "Ariana", "Mahdia","Zaghouan"] else None
+    return f"data/images/{province}.tif" if province in ["Tunis", "Monastir", "Ariana", "Mahdia","Zaghouan","Manouba"] else None
 
 # Generate 64x64 polygon tiles over the image
 def generate_tiles(image_file, output_file, area_str, size=64):
