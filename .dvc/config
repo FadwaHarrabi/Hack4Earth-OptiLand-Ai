@@ -1,0 +1,8 @@
+[core]
+    remote = dagshub
+['remote "myremote"']
+    url = https://dagshub.com/fadwaharrabi58/Hack4Earth-OptiLand-Ai.dvc
+['remote "dagshub"']
+    url = https://dagshub.com/fadwaharrabi58/OptiLand-Ai.dvc
+['remote "main"']
+    url = https://dagshub.com/fadwaharrabi58/OptiLand-Ai.dvc
