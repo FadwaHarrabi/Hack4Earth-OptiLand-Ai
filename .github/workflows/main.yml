@@ -3,7 +3,7 @@ name: Python CI/CD with Docker
 on:
   push:
     branches:
-      - main  # Trigger workflow on push to the main branch
+      - main
 
 jobs:
   build-and-push:
@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'  # Specify the Python version you need
+          python-version: '3.11'
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -30,8 +30,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.fadwaharrabi58@gmail.com }}  # Docker Hub username
-          password: ${{ secrets.fadwaharr123 }}  # Docker Hub password
+          username: ${{ secrets.fadwaharrabi58@gmail.com }}
+          password: ${{ secrets.fadwaharr123 }}
 
       # Step 5: Build the Docker image
       - name: Build Docker image
@@ -40,4 +40,3 @@ jobs:
       # Step 6: Push the Docker image to Docker Hub
       - name: Push Docker image
         run: docker push ${{ secrets.fadwaharrabi58@gmail.com }}/my-python-app:latest
-
