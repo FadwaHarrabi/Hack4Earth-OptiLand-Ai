@@ -91,7 +91,6 @@ streamlit run app.py
 ```
 
 ## Team
-- **Team Leader**: Wadie Kadri
 - **Team Member**: Fadwa Harrabi
 
 ## License
