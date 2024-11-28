@@ -20,8 +20,7 @@ def get_requirements(file_path:str)-> List[str]:
 setup(
     name="Satellite-Based Monitoring System for Land Use and Land Cover Changes for Sustainable Development",
     version='0.0.1',
-    author=" Kadri Wadie and Fadwa Harrabi",
-    author_email="kadri.wadie@ieee.org ",
+    author="Fadwa Harrabi",
     packages=find_packages(),
     install_requires=get_requirements("requirements.txt")
 )
