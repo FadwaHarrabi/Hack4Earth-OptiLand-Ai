@@ -124,7 +124,7 @@ provinces = load_province_options()
 def load_model():
     model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
     model.fc = torch.nn.Linear(model.fc.in_features, 10)
-    model.load_state_dict(torch.load("models/best_model.pth", map_location=torch.device('cpu')))
+    model = torch.jit.load("models/best_model.pth", map_location=torch.device('cpu'))
     model.eval()
     return model
 

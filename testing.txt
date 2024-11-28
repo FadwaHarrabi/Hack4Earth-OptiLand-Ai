@@ -1,0 +1,15 @@
+Unit Tests for Individual Functions
+
+Testing load_province_options()
+Testing load_tif_image()
+Testing generate_tiles()
+Testing predict_crop()
+Testing calculate_co2_from_tiles()
+
+
+Streamlit Integration Tests
+
+App rendering
+Province selection
+Tab navigation
+Metric validation
