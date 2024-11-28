@@ -18,7 +18,7 @@
 - [Acknowledgements](#acknowledgements)
 
 ## Introduction
-This repository contains an AI-based platform designed to classify **Land Use and Land Cover (LULC)** from **Sentinel-2 satellite imagery**. The platform is developed as part of the [Hack4Earth Hackathon](https://hack4earth.org), focusing on sustainable environmental solutions through AI. **OptiLand-Ai** is an AI-powered web application for LULC prediction using satellite imagery. The app allows users to select a province, view satellite imagery, and predict LULC classes while also calculating the CO₂ impact based on different land covers. This tool is particularly useful for environmental monitoring and sustainability analysis.
+This repository contains an AI-based platform designed to classify **Land Use and Land Cover (LULC)** from **Sentinel-2 satellite imagery** focusing on sustainable environmental solutions through AI. **OptiLand-Ai** is an AI-powered web application for LULC prediction using satellite imagery. The app allows users to select a province, view satellite imagery, and predict LULC classes while also calculating the CO₂ impact based on different land covers. This tool is particularly useful for environmental monitoring and sustainability analysis.
 
 ## Features
 - **LULC Prediction**: Utilizes a pre-trained ResNet50 model to predict various LULC classes such as forests, residential areas, industrial areas, and more.
