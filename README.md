@@ -91,7 +91,7 @@ streamlit run app.py
 ```
 
 ## Team
-- **Team Member**: Fadwa Harrabi
+- **Team Lead**: Fadwa Harrabi
 
 ## License
 This project is licensed under the MIT License.
